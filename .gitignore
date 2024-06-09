@@ -1,0 +1,6 @@
+.DS_Store
+*-db
+.idea
+/.metadata/
+.vscode/
+node_modules
