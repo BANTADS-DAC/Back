@@ -39,6 +39,11 @@ function verifyJWT(req, res, next) {
     
 }
 
+// Cria o servidor na porta 3000
+var server = http.createServer(app);
+server.listen(3000);
+console.log('API Gateway running!');
+
 // auth-service
 app.post('/login', (req, res, next) => {
     authServiceProxy(req, res, next);
@@ -89,7 +94,7 @@ app.get('/clientes', verifyJWT, async (req, res, next) => {
                 clientes
             });
         } catch (error) {
-            // Handle any errors that occurred during the requests
+          
             console.error(error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
@@ -142,17 +147,9 @@ app.get('/clientes/:id', verifyJWT, async (req, res, next) => {
             });
         }
     } catch (error) {
-        // Handle any errors that occurred during the requests
         // console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-});
-
-// Aprovar cliente
-
-app.post('/aprovarConta/:cpf', verifyJWT, (req, res, next) => {
-
-    clientesPostServiceProxy(req, res, next);
 });
 
 // contas-service
@@ -167,7 +164,7 @@ app.get('/contas/:numero', verifyJWT, async (req, res, next) => {
                 cliente: clientesResponse.data
             });
         } catch (error) {
-            // Handle any errors that occurred during the requests
+          
             console.error(error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
@@ -197,6 +194,12 @@ app.get('/contas/gerente', verifyJWT, (req, res, next) => {
     contasServiceProxy(req, res, next);
 });
 
+// Aprovar cliente
+
+app.post('/aprovarConta/:cpf', verifyJWT, (req, res, next) => {
+
+    clientesPostServiceProxy(req, res, next);
+});
 
 // gerente-service
 app.get('/gerentes', verifyJWT, (req, res, next) => {
@@ -214,9 +217,3 @@ app.post('/gerentes/inserir', verifyJWT, (req, res, next) => {
 app.delete('/gerentes/:id', verifyJWT, (req, res, next) => {
     gerentesDeleteServiceProxy(req, res, next);
 })
-
-
-// Cria o servidor na porta 3000
-var server = http.createServer(app);
-server.listen(3000);
-console.log('API Gateway running!');
