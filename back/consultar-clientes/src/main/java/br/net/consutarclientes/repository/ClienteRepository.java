@@ -1,3 +1,4 @@
+
 package br.net.consutarclientes.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
